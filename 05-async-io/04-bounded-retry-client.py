@@ -42,8 +42,8 @@ async def main():
     semaphore = asyncio.Semaphore(2)
     
     start = time.time()
-    async with httpx.AsyncClient() as client:
-        results = asyncio.gather(*[fetch_with_retry(client,semaphore,url) for url in urls])
+    async with httpx.AsyncClient(timeout=1.0) as client:
+        results = await asyncio.gather(*[fetch_with_retry(client,semaphore,url) for url in urls])
         
     print(f"results - {results}")
     print(
