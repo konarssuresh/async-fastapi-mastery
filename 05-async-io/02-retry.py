@@ -9,6 +9,7 @@ async def fetch_with_retry(client, url, retries=3):
             response = await client.get(url)
             response.raise_for_status()
             print(f"Success {url}")
+            return response
         except httpx.HTTPStatusError as e:
             print(f"Error on attempt {attempt}:{e.response.status_code}")
             status = e.response.status_code
